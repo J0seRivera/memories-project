@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Stack MERN project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/J0seRivera/memories-project.git"
+  },
+  "keywords": [
+    "react",
+    "node",
+    "mern",
+    "mongoDB",
+    "javascript"
+  ],
+  "author": "Jose Rivera <joseriveradl@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/J0seRivera/memories-project/issues"
+  },
+  "homepage": "https://github.com/J0seRivera/memories-project#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  }
+}

@@ -4,3 +4,10 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+@media screen and (max-width: 600px) {
+  .mainContainer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+

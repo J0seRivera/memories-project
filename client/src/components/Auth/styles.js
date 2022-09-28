@@ -26,6 +26,8 @@ export default makeStyles((theme) => ({
     width: '100%'
   },
   googleButton: {
-    marginBottom: '20px',
+    marginBottom: '15px',
+    display: 'flex',
+    justifyContent: 'center'
   },
 }));

@@ -9,32 +9,50 @@ import { AUTH } from '../../constants/actionTypes';
 import LockOutlinedIcon from '@mui/icons-material/LockClockOutlined'
 import useStyles from './styles'
 import Input from './Input'
+import { signin, signup } from '../../actions/auth'
+
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+}
 
 export const Auth = () => {
   const classes = useStyles()
   const [showPassword, setShowPassword] = useState(false)
   const [isSignUp, setIsSignUp] = useState(false)
+  const [formData, setFormData] = useState(initialState)
 
   const dispatch = useDispatch()
+
   const navigate = useNavigate()
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
-  const handleSubmit = () => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      dispatch(signup(formData, navigate))
+    } else {
+      dispatch(signin(formData, navigate))
+    }
   }
-  const handleChange = () => {
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp)
-    handleShowPassword(false)
+    setShowPassword(false)
   }
 
   const googleSuccess = async (res) => {
     const result = res //?.special operator will not throw an error
     const token = res.credential
     try {
-      dispatch({ type: 'AUTH', data: { result, token } })
+      dispatch({ type: AUTH, data: { result, token } })
       navigate('/')
     } catch (error) {
       console.log(error)
@@ -66,31 +84,30 @@ export const Auth = () => {
             }
             <Input name='email' label='Email Address' handleChange={handleChange} type='email' />
             <Input name='password' label='Password' handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
-            {isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
+            {isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />}
 
           </Grid>
-          <Button type="submit" fullWith variant="contained" color="primary" className={classes.submit}>
+          <Button type="submit" variant="contained" color="primary" className={classes.submit}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
-          <GoogleLogin
-            //clientId="217761154938-2o94b5kes8cgm95plp4s2dtm7dhbjrrh.apps.googleusercontent.com"
+          <div className={classes.googleButton}>
 
-
-            render={(renderProps) => (
-              <Button
-                className={classes.googleButton}
-                color='primary'
-                fullWith
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                startIcon={<Icon />}
-                variant='contained'
-              >Google Sign In</Button>
-            )}
-            onSuccess={googleSuccess}
-            onFailure={googleFailure}
-            cookiePolicy="single_host_origin"
-          />
+            <GoogleLogin
+              render={(renderProps) => (
+                <Button
+                  className={classes.googleButton}
+                  color='primary'
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  startIcon={<Icon />}
+                  variant='contained'
+                >Google Sign In</Button>
+              )}
+              onSuccess={googleSuccess}
+              onFailure={googleFailure}
+              cookiePolicy="single_host_origin"
+            />
+          </div>
           <Grid container justify='flex-end' >
             <Grid item>
               <Button onClick={switchMode}>

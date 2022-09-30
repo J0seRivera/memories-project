@@ -12,8 +12,7 @@ export default (posts=[], action) => {
 
     case UPDATE:
     case LIKE:
-      return posts.map((post) => post._id===action.payload._id ? action.payload : post)
-
+      return posts.map((post) => (post._id === action.payload._id ? action.payload : post))
       default:
       return posts;
   }

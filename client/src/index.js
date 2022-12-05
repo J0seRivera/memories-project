@@ -7,7 +7,8 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 import './index.css'
-
+import dotenv from 'dotenv'
+dotenv.config()
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
 
 
@@ -16,7 +17,7 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <GoogleOAuthProvider clientId="217761154938-2o94b5kes8cgm95plp4s2dtm7dhbjrrh.apps.googleusercontent.com" >
+    <GoogleOAuthProvider clientId= {process.dot.env.GOOGLE_ID} >
       <App />
     </GoogleOAuthProvider>
   </Provider>
